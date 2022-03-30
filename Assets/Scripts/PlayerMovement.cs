@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float forceMagnitude;          // Is the amount we will multiply and/or add to the force to make it move
     [SerializeField] private float maxVelo;                 // Top velo/speed that will be used in this equation
-
+    [SerializeField] private float rotationSpeed;           // How fast we rotate around        
 
     private Rigidbody rb;
     private Camera mainCamera;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
         ProcessInput();
         KeepPlayerOnScreen();
+        RotateToFaceVelocity();
 
     }
 
@@ -125,6 +126,26 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+
+    private void RotateToFaceVelocity()
+    {
+        // This is to make sure that when we start up it does not try to rotate and have it look like a bug
+        if (rb.velocity == Vector3.zero)    // If it is Vector3.zero then we dont want to have any rotation
+        {
+            return;
+        }
+
+
+        /* This rotates the ship to face which ever way the velocity is towards. We are in 3D space so it calls for both the (forwardDirection, upwardsDirection)
+        *   the "upwardDirection" in this instance is the y-axis. But we have it rotated on the x-axis by 90deg to begin with so instead of saying up we need to say back
+        **/
+        
+        Quaternion targetRotation = Quaternion.LookRotation(rb.velocity, Vector3.back);
+        
+        // This rotates on how close we are to the rotation we want to be at. The farther away we are the faster it goes and the closer the slower it goes
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
 
 
 }
