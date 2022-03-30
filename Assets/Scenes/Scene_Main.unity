@@ -4959,7 +4959,7 @@ MonoBehaviour:
   asteroidPrefabs:
   - {fileID: 3579940485299078982, guid: 11c0c97c9f3ff62468e5b7e66f70f63a, type: 3}
   - {fileID: 1124152456756422684, guid: bd188f3476953f648b2ed7f0e8666b73, type: 3}
-  secondsBetweenAsteroids: 1.5
+  secondsBetweenAsteroids: 0.5
   forceRange: {x: 4, y: 6}
 --- !u!4 &383670648
 Transform:
